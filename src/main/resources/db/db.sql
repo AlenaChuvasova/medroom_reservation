@@ -30,10 +30,10 @@ CREATE TABLE `medroom_reservation`.`reservation`
   `startTime`        TIMESTAMP(6) NOT NULL,
   `endTime`          TIMESTAMP(6) NOT NULL,
   `isActive`         BOOLEAN,
-  `employeeId`       INT          NOT NULL,
-  `roomId`           INT          NOT NULL,
+  `emplId`           INT          NOT NULL,
+  `roomid`           INT          NOT NULL,
   PRIMARY KEY (`reservationId`),
-  FOREIGN KEY (employeeId) REFERENCES employee (employeeId),
+  FOREIGN KEY (emplId) REFERENCES employee (employeeId),
   FOREIGN KEY (roomId) REFERENCES room (roomId)
 );
 
@@ -61,4 +61,19 @@ VALUES (301, 'OPHTHALMIC', true);
 INSERT into room(roomNumber, roomType, isAvailable)
 VALUES (501, 'DENTAL', true);
 
-SELECT employeeId, CONCAT(name, ' ', surname) as fullname FROM employee where isFree = true;
+SELECT employeeId, CONCAT(name, ' ', surname) as fullname
+FROM employee
+where isFree = true;
+SELECT reservationId,
+       CONCAT(name, ' ', surname) as fullname,
+       manipulationName,
+       description,
+       startTime,
+       endTime,
+       isActive,
+       roomNumber,
+       emplId,
+       rsrv.roomid
+FROM reservation as rsrv
+       INNER JOIN room as r ON rsrv.roomid = r.roomId
+       INNER JOIN employee as empl ON rsrv.emplId = empl.employeeId

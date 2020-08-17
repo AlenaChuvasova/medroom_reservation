@@ -12,8 +12,8 @@ import java.util.Set;
 
 public class ReservationDaoImpl implements ReservationDao {
     private static final String GET_ALL_RESERVATIONS = "SELECT * FROM reservation";
-    private static final String ADD_NEW_RESERVATION = "INSERT INTO reservation(reservationId, manipulationName, description, startTime, endTime, " +
-            "isActive, employeeId, roomId) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String ADD_NEW_RESERVATION = "INSERT INTO reservation(manipulationName, description, startTime, endTime, " +
+            "isActive, emplId, roomid) VALUES(?, ?, ?, ?, ?, ?, ?)";
     private static final String GET_RESERVATION_BY_ID = "SELECT * FROM reservation where reservationId = ?";
     private static Set<Reservation> reservations = new HashSet<>();
     Reservation reservation;
@@ -28,14 +28,13 @@ public class ReservationDaoImpl implements ReservationDao {
             result = preparedStatement.executeQuery();
             while (result.next()) {
                 reservation = new Reservation();
-                reservation.setReservationId(result.getInt("reservationId"));
                 reservation.setManipulationName(result.getString("manipulationName"));
                 reservation.setDescription(result.getString("description"));
                 reservation.setStartTime(result.getDate("startTime"));
                 reservation.setEndTime(result.getDate("endTime"));
                 reservation.setIsActive(result.getBoolean("isActive"));
-                reservation.setEmployeeId(result.getInt("employeeId"));
-                reservation.setRoomId(result.getInt("roomId"));
+                reservation.setEmplId(result.getInt("emplId"));
+                reservation.setRoomid(result.getInt("roomid"));
                 reservations.add(reservation);
             }
         } catch (SQLException ex) {
@@ -49,7 +48,7 @@ public class ReservationDaoImpl implements ReservationDao {
     }
 
     @Override
-    public Reservation addNewReservation(Reservation reservation) throws IOException, ClassNotFoundException {
+    public synchronized Reservation addNewReservation(Reservation reservation) throws IOException, ClassNotFoundException {
         Connection connection = ConnectionFactory.getConnection();
         try {
             preparedStatement = connection.prepareStatement(ADD_NEW_RESERVATION);
@@ -58,8 +57,8 @@ public class ReservationDaoImpl implements ReservationDao {
             preparedStatement.setTimestamp(3, new Timestamp(reservation.getStartTime().getTime()));
             preparedStatement.setTimestamp(4, new Timestamp(reservation.getEndTime().getTime()));
             preparedStatement.setBoolean(5, reservation.getIsActive());
-            preparedStatement.setInt(6, reservation.getEmployeeId());
-            preparedStatement.setInt(7, reservation.getRoomId());
+            preparedStatement.setInt(6, reservation.getEmplId());
+            preparedStatement.setInt(7, reservation.getRoomid());
             preparedStatement.executeUpdate();
             return null;
         } catch (SQLException e) {
@@ -86,10 +85,10 @@ public class ReservationDaoImpl implements ReservationDao {
                 Date startTime = result.getDate("startTime");
                 Date endTime = result.getDate("endTime");
                 Boolean isActive = result.getBoolean("isActive");
-                Integer employeeId = result.getInt("employeeId");
-                Integer roomId = result.getInt("roomId");
+                Integer employeeId = result.getInt("emplId");
+                Integer roomid = result.getInt("roomid");
                 reservation = new Reservation(reservationId, manipulationName, description, startTime,
-                        endTime, isActive, employeeId, roomId
+                        endTime, isActive, employeeId, roomid
                 );
             }
         } catch (SQLException ex) {

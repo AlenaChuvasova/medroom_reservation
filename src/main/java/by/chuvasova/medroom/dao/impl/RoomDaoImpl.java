@@ -14,7 +14,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class RoomDaoImpl implements RoomDao {
-    //lock dao while create
     private static final String GET_AVAILABLE_ROOM = "SELECT * FROM room where isAvailable=true";
     private static final String GET_ROOM_BY_NUMBER = "SELECT * FROM room where roomNumber=?";
     private static final String ADD_NEW_ROOM = "INSERT INTO room(roomNumber, roomType, isAvailable) VALUES(?, ?, true)";
@@ -72,7 +71,7 @@ public class RoomDaoImpl implements RoomDao {
     }
 
     @Override
-    public Room addNewRoom(Room room) throws IOException, ClassNotFoundException {
+    public synchronized Room addNewRoom(Room room) throws IOException, ClassNotFoundException {
         Connection connection = ConnectionFactory.getConnection();
         try {
             preparedStatement = connection.prepareStatement(ADD_NEW_ROOM);

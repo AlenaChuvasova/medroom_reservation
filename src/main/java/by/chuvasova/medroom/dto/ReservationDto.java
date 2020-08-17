@@ -17,12 +17,12 @@ import java.util.Date;
 @EqualsAndHashCode
 
 public class ReservationDto {
-    private Integer id;
+    private Integer dtoId;
+    private String fullName;
     private String manipulationName;
     private String description;
     private Date startTime;
     private Date endTime;
     private Boolean isActive;
-    private String fullName;
     private Integer roomNumber;
 }

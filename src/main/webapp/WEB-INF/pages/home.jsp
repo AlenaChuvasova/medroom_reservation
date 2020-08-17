@@ -26,6 +26,9 @@
     <li>
         <button onclick="location.href='/addreservation'">Make a reservation</button>
     </li>
+    <li>
+        <button onclick="location.href='/allreservs'">Get all reservations</button>
+    </li>
 </ul>
 </body>
 </html>

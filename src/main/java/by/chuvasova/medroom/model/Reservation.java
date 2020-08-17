@@ -22,8 +22,8 @@ public class Reservation {
     private Date startTime;
     private Date endTime;
     private Boolean isActive;
-    private Integer employeeId;
-    private Integer roomId;
+    private Integer emplId;
+    private Integer roomid;
 
     public Reservation(String manipulationName, String description, Date startTime, Date endTime,
                        Boolean isActive, Integer employeeId, Integer roomId) {
@@ -32,7 +32,7 @@ public class Reservation {
         this.startTime = startTime;
         this.endTime = endTime;
         this.isActive = isActive;
-        this.employeeId = employeeId;
-        this.roomId = roomId;
+        this.emplId = employeeId;
+        this.roomid = roomId;
     }
 }

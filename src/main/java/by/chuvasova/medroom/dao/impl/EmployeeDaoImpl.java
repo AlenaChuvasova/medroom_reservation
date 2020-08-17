@@ -14,7 +14,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class EmployeeDaoImpl implements EmployeeDao {
-    //lock dao while create
     private static final String GET_AVAILABLE_EMPLOYEE = "SELECT * FROM employee where isFree = true";
     private static final String ADD_NEW_EMPLOYEE = "INSERT INTO employee(name, surname, position, isFree) VALUES(?, ?, ?, true)";
     private static final String GET_EMPLOYEE_BY_ID = "SELECT * FROM employee where employeeId = ?";
@@ -49,7 +48,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
-    public Employee addNewEmployee(Employee employee) throws IOException, ClassNotFoundException {
+    public synchronized Employee addNewEmployee(Employee employee) throws IOException, ClassNotFoundException {
         Connection connection = ConnectionFactory.getConnection();
         try {
             preparedStatement = connection.prepareStatement(ADD_NEW_EMPLOYEE);
