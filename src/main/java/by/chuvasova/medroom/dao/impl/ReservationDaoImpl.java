@@ -14,7 +14,9 @@ public class ReservationDaoImpl implements ReservationDao {
     private static final String GET_ALL_RESERVATIONS = "SELECT * FROM reservation";
     private static final String ADD_NEW_RESERVATION = "INSERT INTO reservation(manipulationName, description, startTime, endTime, " +
             "isActive, emplId, roomid) VALUES(?, ?, ?, ?, ?, ?, ?)";
-    private static final String GET_RESERVATION_BY_ID = "SELECT * FROM reservation where reservationId = ?";
+    private static final String GET_RESERVATION_BY_ID = "SELECT e FROM reservation where reservationId = ?";
+    private static final String GET_ROOMID_BY_ROOMNUMER = "SELECT roomId FROM room where roomNumber = ?";
+    private static final String GET_EMPLOYEEID_BY_FULLNAME = "SELECT employeeId FROM employee where surname = ?";
     private static Set<Reservation> reservations = new HashSet<>();
     Reservation reservation;
     ResultSet result = null;
@@ -56,7 +58,7 @@ public class ReservationDaoImpl implements ReservationDao {
             preparedStatement.setString(2, reservation.getDescription());
             preparedStatement.setTimestamp(3, new Timestamp(reservation.getStartTime().getTime()));
             preparedStatement.setTimestamp(4, new Timestamp(reservation.getEndTime().getTime()));
-            preparedStatement.setBoolean(5, reservation.getIsActive());
+            preparedStatement.setBoolean(5, true);
             preparedStatement.setInt(6, reservation.getEmplId());
             preparedStatement.setInt(7, reservation.getRoomid());
             preparedStatement.executeUpdate();
@@ -69,6 +71,42 @@ public class ReservationDaoImpl implements ReservationDao {
             DbUtils.close(result);
         }
         return reservation;
+    }
+
+    @Override
+    public Integer getRoomId(int id) throws IOException, ClassNotFoundException {
+        Connection connection = ConnectionFactory.getConnection();
+        Integer roomId = 0;
+        try {
+            preparedStatement = connection.prepareStatement(GET_ROOMID_BY_ROOMNUMER);
+            preparedStatement.setInt(1, id);
+            result = preparedStatement.executeQuery();
+            if (result.next()) {
+                Integer reservationRoomId = result.getInt("roomid");
+                roomId = reservationRoomId;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return roomId;
+    }
+
+    @Override
+    public Integer getEmployeeId(String surname) throws IOException, ClassNotFoundException {
+        Connection connection = ConnectionFactory.getConnection();
+        Integer employeeId = 0;
+        try {
+            preparedStatement = connection.prepareStatement(GET_EMPLOYEEID_BY_FULLNAME);
+            preparedStatement.setString(1, surname);
+            result = preparedStatement.executeQuery();
+            if (result.next()) {
+                Integer reservationEmplId = result.getInt("employeeId");
+                employeeId = reservationEmplId;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return employeeId;
     }
 
     @Override

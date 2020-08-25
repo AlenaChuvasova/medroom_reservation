@@ -16,7 +16,7 @@
         <label>Available employee's full name: </label>
         <select name="fullNames">
             <c:forEach items="${fullNames}" var="employee">
-                <option value="${employee.key}">${employee.value}</option>
+                <option value="${employee.value}">${employee.value}</option>
             </c:forEach>
         </select><br>
         <label for="manipulation">Choose appropriate manipulation: </label>
@@ -40,8 +40,8 @@
 
         <label>Available room number: </label>
         <select name="freeRoom">
-            <c:forEach items="${freeRoom}" var="number" varStatus="loop">
-                <option value="${loop.index}">${number}</option>
+            <c:forEach items="${freeRoom}" var="room">
+                <option value="${room.value}">${room.value}</option>
             </c:forEach>
         </select><br>
         <button type="submit">CREATE</button>

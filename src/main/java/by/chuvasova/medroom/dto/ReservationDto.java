@@ -16,8 +16,8 @@ import java.util.Date;
 @ToString
 @EqualsAndHashCode
 
-public class ReservationDto {
-    private Integer dtoId;
+public class ReservationDto implements Comparable<ReservationDto> {
+    private Integer id;
     private String fullName;
     private String manipulationName;
     private String description;
@@ -25,4 +25,9 @@ public class ReservationDto {
     private Date endTime;
     private Boolean isActive;
     private Integer roomNumber;
+
+    @Override
+    public int compareTo(ReservationDto o) {
+        return id - o.id;
+    }
 }

@@ -28,7 +28,7 @@
     <c:forEach items="${reservs}" var="reservs">
         <tbody>
         <tr>
-            <td>${reservs.reservationId}</td>
+            <td>${reservs.id}</td>
             <td>${reservs.fullName}</td>
             <td>${reservs.manipulationName}</td>
             <td>${reservs.description}</td>

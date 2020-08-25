@@ -11,5 +11,9 @@ public interface ReservationDao {
 
     Reservation addNewReservation(Reservation reservation) throws IOException, ClassNotFoundException;
 
+    Integer getRoomId(int id) throws IOException, ClassNotFoundException;
+
+    Integer getEmployeeId(String fullname) throws IOException, ClassNotFoundException;
+
     Reservation getReservationById(Integer id) throws IOException, ClassNotFoundException, SQLException;
 }
