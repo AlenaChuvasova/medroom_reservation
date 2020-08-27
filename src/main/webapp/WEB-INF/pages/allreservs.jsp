@@ -23,22 +23,32 @@
         <th>END TIME</th>
         <th>IS ACTIVE</th>
         <th>ROOM NUMBER</th>
+        <th colspan="2">    CANCEL   </th>
     </tr>
     </thead>
-    <c:forEach items="${reservs}" var="reservs">
+    <c:forEach items="${reservations}" var="reservations">
         <tbody>
         <tr>
-            <td>${reservs.id}</td>
-            <td>${reservs.fullName}</td>
-            <td>${reservs.manipulationName}</td>
-            <td>${reservs.description}</td>
-            <td>${reservs.startTime}</td>
-            <td>${reservs.endTime}</td>
-            <td>${reservs.isActive}</td>
-            <td>${reservs.roomNumber}</td>
+            <td>${reservations.id}</td>
+            <td>${reservations.fullName}</td>
+            <td>${reservations.manipulationName}</td>
+            <td>${reservations.description}</td>
+            <td>${reservations.startTime}</td>
+            <td>${reservations.endTime}</td>
+            <td>${reservations.isActive}</td>
+            <td>${reservations.roomNumber}</td>
+            <td><form action="${pageContext.request.contextPath}/cancel" method="post">
+            <td>
+                <button onclick="location.href='/cancel'">cancel</button>
+            <input type="hidden" name="id" value="${reservations.id}">
+            </td>
+            </form></td>
+                <%-- --%>
         </tr>
         </tbody>
     </c:forEach>
 </table>
 </body>
 </html>
+
+<%--<td><button onclick="location.href='/cancel/${reservs.id}'">cancel</button></td>--%>

@@ -72,8 +72,8 @@ public class ReservationService {
                     result.getString("fullName"),
                     result.getString("manipulationName"),
                     result.getString("description"),
-                    result.getDate("startTime"),
-                    result.getDate("endTime"),
+                    result.getTimestamp("startTime"),
+                    result.getTimestamp("endTime"),
                     result.getBoolean("isActive"),
                     result.getInt("roomNumber")));
         }
@@ -88,11 +88,11 @@ public class ReservationService {
         Connection connection = ConnectionFactory.getConnection();
         try {
             preparedStatement = connection.prepareStatement(STOP_RESERVATION);
+        preparedStatement.setInt(1, reservationId);
+        preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        preparedStatement.setInt(1, reservationId);
-        preparedStatement.executeUpdate();
     }
 
     public void updateRoomStatus() throws IOException, ClassNotFoundException, SQLException {
@@ -103,7 +103,6 @@ public class ReservationService {
             e.printStackTrace();
         }
         preparedStatement.executeUpdate();
-
     }
 
     public void updateEmployeeStatus() throws IOException, ClassNotFoundException, SQLException {

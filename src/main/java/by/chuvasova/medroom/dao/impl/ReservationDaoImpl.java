@@ -32,8 +32,8 @@ public class ReservationDaoImpl implements ReservationDao {
                 reservation = new Reservation();
                 reservation.setManipulationName(result.getString("manipulationName"));
                 reservation.setDescription(result.getString("description"));
-                reservation.setStartTime(result.getDate("startTime"));
-                reservation.setEndTime(result.getDate("endTime"));
+                reservation.setStartTime(result.getTimestamp("startTime"));
+                reservation.setEndTime(result.getTimestamp("endTime"));
                 reservation.setIsActive(result.getBoolean("isActive"));
                 reservation.setEmplId(result.getInt("emplId"));
                 reservation.setRoomid(result.getInt("roomid"));
